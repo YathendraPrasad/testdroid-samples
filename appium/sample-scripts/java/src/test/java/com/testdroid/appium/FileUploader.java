@@ -28,7 +28,13 @@ public class FileUploader {
     protected static String uploadFile(String targetAppPath, String serverURL, String testdroid_apikey)
             throws IOException {
         final HttpHeaders headers = new HttpHeaders().setBasicAuthentication(testdroid_apikey, "");
+        //final HttpHeaders headers = new HttpHeaders().setBasicAuthentication("x-api-key", testdroid_apikey);
+        
 
+        logger.debug("targetPath is::"+ targetAppPath);
+        logger.debug("serverURL is::"+ serverURL);
+        logger.debug("testdroid_apikey is::"+ testdroid_apikey);
+        
         HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
             public void initialize(HttpRequest request) {
                 request.setParser(new JsonObjectParser(JSON_FACTORY));
@@ -42,7 +48,9 @@ public class FileUploader {
         MultipartFormDataContent.Part filePart = new MultipartFormDataContent.Part("file", fileContent);
         multipartContent.addPart(filePart);
 
+        logger.debug("Before posting the request");
         HttpRequest request = requestFactory.buildPostRequest(new GenericUrl(serverURL + "/upload"), multipartContent);
+        logger.debug("After posting the request");
 
         AppiumResponse appiumResponse = request.execute().parseAs(AppiumResponse.class);
 
