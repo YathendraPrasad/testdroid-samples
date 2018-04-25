@@ -27,8 +27,8 @@ public class FileUploader {
     
     protected static String uploadFile(String targetAppPath, String serverURL, String testdroid_apikey)
             throws IOException {
-        final HttpHeaders headers = new HttpHeaders().setBasicAuthentication(testdroid_apikey, "");
-        //final HttpHeaders headers = new HttpHeaders().setBasicAuthentication("x-api-key", testdroid_apikey);
+        final HttpHeaders headers = new HttpHeaders().setBasicAuthentication("yatneela@in.ibm.com", "Yathuyathu_2$$");
+       // final HttpHeaders headers = new HttpHeaders().setBasicAuthentication("x-api-key", testdroid_apikey);
         
 
         logger.debug("targetPath is::"+ targetAppPath);
