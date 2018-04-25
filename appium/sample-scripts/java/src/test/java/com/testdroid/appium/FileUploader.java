@@ -49,10 +49,19 @@ public class FileUploader {
         multipartContent.addPart(filePart);
 
         logger.debug("Before posting the request");
+        AppiumResponse appiumResponse = null;
+        
+        try{
         HttpRequest request = requestFactory.buildPostRequest(new GenericUrl(serverURL + "/upload"), multipartContent);
         
 
-        AppiumResponse appiumResponse = request.execute().parseAs(AppiumResponse.class);
+         appiumResponse = request.execute().parseAs(AppiumResponse.class);
+        }
+        catch(IOException excep)
+        {
+        	logger.debug("In catch block"+excep.getMessage());
+        }
+        
         logger.debug("After posting the request");
         logger.debug(appiumResponse.toString());
 
