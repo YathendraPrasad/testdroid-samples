@@ -61,6 +61,7 @@ public class FileUploader {
         catch(IOException excep)
         {
         	logger.debug("In catch block"+excep.getMessage());
+        	throw new IOException(excep);
         }
         
         logger.debug("After posting the request");
