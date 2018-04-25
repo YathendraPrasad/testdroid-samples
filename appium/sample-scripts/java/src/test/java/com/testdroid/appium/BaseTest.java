@@ -42,6 +42,11 @@ public abstract class BaseTest {
                 logger.debug("Uploading " + getTargetAppPath() + " to Testdroid Cloud");
                 fileUUID = FileUploader.uploadFile(getTargetAppPath(), getAppiumServerAddress(),
                         getApiKey());
+                try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
                 logger.debug("File uploaded. File UUID is " + fileUUID);
             }
             if (exportTestResultsToCloud()) {
