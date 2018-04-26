@@ -5,7 +5,8 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import com.google.api.client.http.FileContent;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpHeaders;
@@ -43,8 +44,26 @@ public class FileUploader {
             }
 
         });
+        
+        // Download the .apk file first
+        
+        String fileURL = targetAppPath;
+        String fileName  = FilenameUtils.getName(fileURL);
+        
+        File currentDirectory = new File(new File("").getAbsolutePath());
+		System.out.println(currentDirectory.getCanonicalPath());
+		System.out.println("Current running directory is::"+currentDirectory.getAbsolutePath());
+		String saveDir = currentDirectory.getAbsolutePath();
+        try {
+            HttpDownloadUtility.downloadFile(fileURL, saveDir);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        // End
+        
         MultipartFormDataContent multipartContent = new MultipartFormDataContent();
-        FileContent fileContent = new FileContent("application/octet-stream", new File(targetAppPath));
+        logger.debug("Complete Path is :::"+ saveDir+File.separator+fileName);
+        FileContent fileContent = new FileContent("application/octet-stream", new File(saveDir+File.separator+fileName));
 
         MultipartFormDataContent.Part filePart = new MultipartFormDataContent.Part("file", fileContent);
         multipartContent.addPart(filePart);
